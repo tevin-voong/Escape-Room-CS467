@@ -4,46 +4,51 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public CharacterController controller;
-    public float baseSpeed = 12f;
-    public float gravity = -9.81f;
-    public float jumpHeight = 3f;
-    public float sprintSpeed = 5f;
+	public CharacterController controller;
+	public float baseSpeed = 12f;
+	public float gravity = -9.8f;
+	public float jumpHeight = 3f;
 
-    float speedBoost = 1f;
-    Vector3 velocity;
-    void Start()
-    {
+	public bool isGrounded;
 
-    }
+	Vector3 velocity;
 
-    void Update()
-    {
-        if (controller.isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
+	void Start()
+	{
+		// Makes player movement smoother
+		controller = GetComponent<CharacterController>();
+	}
+	void Update()
+	{
 
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+		// JUMP FEATURES
+		if (Input.GetButtonDown("Jump"))
+		{
+			velocity.y = -2f;
+			isGrounded = false;
+		}
 
-        if (Input.GetButton("Fire3"))
-            speedBoost = sprintSpeed;
-        else
-            speedBoost = 1f;
+		if (controller.isGrounded)
+		{
+			velocity.y = -2f;
+			isGrounded = true;
+			if (Input.GetButtonDown("Jump"))
+			{
+				velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+			}
+		}
 
+		velocity.y += gravity * Time.deltaTime;
 
-        Vector3 move = transform.right * x + transform.forward * z;
+		// GENERAL MOVEMENT FEATURES
+		float x = Input.GetAxis("Horizontal");
+		float z = Input.GetAxis("Vertical");
 
-        controller.Move(move * (baseSpeed + speedBoost) * Time.deltaTime);
+		Vector3 move = transform.right * x + transform.forward * z;
 
-        if (Input.GetButtonDown("Jump") && controller.isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
+		controller.Move(move * baseSpeed * Time.deltaTime);
 
-        velocity.y += gravity * Time.deltaTime;
+		controller.Move(velocity * Time.deltaTime);
 
-        controller.Move(velocity * Time.deltaTime);
-    }
+	}
 }
