@@ -4,5 +4,12 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 13503d90e3108a14b9aaa8d77c88d2eb
+  - enabled: 1
+    path: Assets/Scenes/Yellow Room.unity
+    guid: 85631d06d0ddad34587171bfe5413fd8
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
