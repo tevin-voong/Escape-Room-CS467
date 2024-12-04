@@ -13,7 +13,7 @@ public class NumTotal : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        numCounter.text = "FALL 200" + numVal;
+        numCounter.text = "FALL 20__";
     }
 
     public void IncTotal()
